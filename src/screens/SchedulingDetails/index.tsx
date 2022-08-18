@@ -58,6 +58,8 @@ interface Period {
 }
 
 export function SchedulingDetails() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [date, setDate] = useState<Period>({} as Period);
 
   const theme = useTheme();
@@ -74,18 +76,29 @@ export function SchedulingDetails() {
       ...schedulesByCar.data.unavailable_dates,
       ...dates,
     ];
-    if (unavailable_dates === dates) {
-      Alert.alert("Essas datas já estão ocupadas");
-      return;
-    } else {
-      api
-        .put(`/schedules_bycars/${car.id}`, {
-          id: car.id,
-          unavailable_dates,
-        })
-        .then(() => navigation.navigate("SchedulingComplete"))
-        .catch((err) => console.log(err));
-    }
+
+    setIsLoading(true);
+
+    await api.post("/schedules_byuser", {
+      user_id: 1,
+      car,
+      startDate: format(getPlataformDate(new Date(dates[0])), "dd/MM/yyyy"),
+      endDate: format(
+        getPlataformDate(new Date(dates[dates.length - 1])),
+        "dd/MM/yyyy"
+      ),
+    });
+
+    api
+      .put(`/schedules_bycars/${car.id}`, {
+        id: car.id,
+        unavailable_dates,
+      })
+      .then(() => navigation.navigate("SchedulingComplete"))
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
   }
 
   function handleBack() {
@@ -173,6 +186,8 @@ export function SchedulingDetails() {
           title="Alugar agora"
           color={theme.colors.success}
           onPress={handleConfirmRental}
+          enabled={!isLoading}
+          isLoading={isLoading}
         />
       </Footer>
     </Container>

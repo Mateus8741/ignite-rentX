@@ -55,14 +55,10 @@ export function Scheduling() {
   const { car } = route.params as Params;
 
   function handleSchedulingDetails() {
-    if (!rentalPeriod.startFormatted || !rentalPeriod.endFormatted) {
-      Alert.alert("Selecione um período para alugar");
-    } else {
-      navigation.navigate("SchedulingDetails", {
-        car,
-        dates: Object.keys(markDates),
-      });
-    }
+    navigation.navigate("SchedulingDetails", {
+      car,
+      dates: Object.keys(markDates),
+    });
   }
 
   function handleBack() {
@@ -130,7 +126,11 @@ export function Scheduling() {
       </Content>
 
       <Footer>
-        <Button title="Confirmar" onPress={handleSchedulingDetails} />
+        <Button
+          title="Confirmar"
+          onPress={handleSchedulingDetails}
+          enabled={!!selectedDate.timestamp}
+        />
       </Footer>
     </Container>
   );

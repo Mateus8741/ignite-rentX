@@ -33,7 +33,7 @@ export function Home() {
   function handleCarDetails(car: CarDTO) {
     navigation.navigate("CarDetails", { car });
   }
-  function handleOpenMyCars(car: CarDTO) {
+  function handleOpenMyCars() {
     navigation.navigate("MyCars");
   }
 
