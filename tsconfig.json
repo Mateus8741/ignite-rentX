@@ -18,6 +18,9 @@
       "@assets/*": [
         "src/assets/*"
       ],
+      "@services/*": [
+        "src/services/*"
+      ],
     },
   },
   "extends": "expo/tsconfig.base"

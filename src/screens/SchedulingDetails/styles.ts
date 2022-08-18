@@ -7,6 +7,7 @@ import {
 } from "react-native-iphone-x-helper";
 import { RFValue } from "react-native-responsive-fontsize";
 
+
 export const Container = styled.View`
   flex: 1;
   background-color: ${(props) => props.theme.colors.background_secondary};
@@ -151,7 +152,6 @@ export const RentalPriceQuota = styled.Text`
   font-family: ${(props) => props.theme.fonts.primary_500};
   color: ${(props) => props.theme.colors.title};
   font-size: ${RFValue(10)}px;
-  text-transform: uppercase;
 `;
 
 export const RentalPriceTotal = styled.Text`
@@ -160,3 +160,5 @@ export const RentalPriceTotal = styled.Text`
   font-size: ${RFValue(24)}px;
   text-transform: uppercase;
 `;
+
+

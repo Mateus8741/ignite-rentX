@@ -18,7 +18,9 @@ export const Container = styled(RectButton)`
   margin-bottom: 16px;
 `;
 
-export const Details = styled.View``;
+export const Details = styled.View`
+  margin-right: 32px;
+`;
 
 export const Brand = styled.Text`
   font-family: ${({ theme }) => theme.fonts.secondary_500};
