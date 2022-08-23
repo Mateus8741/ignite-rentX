@@ -28,21 +28,21 @@ export default function App() {
     Archivo_600SemiBold,
   });
 
-  if (!fontsLoaded) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            color: "red",
-          }}
-        >
-          Loading...
-        </Text>
-      </View>
-    );
-  }
+  // if (!fontsLoaded) {
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+  //       <Text
+  //         style={{
+  //           fontSize: 20,
+  //           fontWeight: "bold",
+  //           color: "red",
+  //         }}
+  //       >
+  //         Loading...
+  //       </Text>
+  //     </View>
+  //   );
+  // }
   return (
     <ThemeProvider theme={theme}>
       <Routes />
