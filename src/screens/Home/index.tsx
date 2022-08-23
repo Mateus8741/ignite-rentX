@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StatusBar } from "react-native";
+import { BackHandler, StatusBar } from "react-native";
 
 import { api } from "@/services/api";
 import { CarDTO } from "@/dtos/CarDTO";
@@ -32,6 +32,7 @@ import {
   TotalCars,
 } from "./styles";
 import { PanGestureHandler } from "react-native-gesture-handler";
+import { LoadAnimation } from "@/components/LoadAnimation";
 
 export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
@@ -91,6 +92,13 @@ export function Home() {
     fetchCars();
   }, []);
 
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", () => {
+      return true;
+    });
+  }),
+    [];
+
   return (
     <Container>
       <StatusBar
@@ -101,11 +109,13 @@ export function Home() {
       <Header>
         <HeaderContent>
           <Logo width={RFValue(108)} height={RFValue(12)} />
-          <TotalCars>Total de {cars.length} carros</TotalCars>
+          {!isLoading && (
+            <TotalCars> Total de {cars.length} carros </TotalCars>
+          )}
         </HeaderContent>
       </Header>
       {isLoading ? (
-        <Loading />
+        <LoadAnimation />
       ) : (
         <CarList
           data={cars}

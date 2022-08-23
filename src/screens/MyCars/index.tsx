@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StatusBar } from "react-native";
+import { FlatList, StatusBar, View } from "react-native";
 
 import { useTheme } from "styled-components";
 
@@ -12,8 +12,6 @@ import { CarDTO } from "@/dtos/CarDTO";
 import { useNavigation } from "@react-navigation/native";
 
 import { Car } from "@/components/Car";
-
-import { Loading } from "@/components/Loading";
 
 import {
   Appointments,
@@ -30,7 +28,7 @@ import {
   Subtitle,
   Title,
 } from "./styles";
-
+import { LoadAnimation } from "@/components/LoadAnimation";
 
 interface CarProps {
   id: string;
@@ -82,11 +80,21 @@ export function MyCars() {
         <Subtitle>Escolha uma data de início e fim do aluguel</Subtitle>
       </Header>
 
-        <Content>
-          <Appointments>
-            <AppointmentsTitle>Agendamentos feitos</AppointmentsTitle>
-            <AppointmentsQuantity>{cars.length}</AppointmentsQuantity>
-          </Appointments>
+      <Content>
+        <Appointments>
+          <AppointmentsTitle>Agendamentos feitos</AppointmentsTitle>
+          <AppointmentsQuantity>{cars.length}</AppointmentsQuantity>
+        </Appointments>
+        {isLoading ? (
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+            }}
+          >
+            <LoadAnimation />
+          </View>
+        ) : (
           <FlatList
             data={cars}
             keyExtractor={(item) => item.id}
@@ -110,8 +118,8 @@ export function MyCars() {
               </CarWrapper>
             )}
           />
-        </Content>
-
+        )}
+      </Content>
     </Container>
   );
 }
