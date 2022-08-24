@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BackHandler, StatusBar } from "react-native";
+import { BackHandler, StatusBar, View } from "react-native";
 
 import { api } from "@/services/api";
 import { CarDTO } from "@/dtos/CarDTO";
@@ -109,13 +109,18 @@ export function Home() {
       <Header>
         <HeaderContent>
           <Logo width={RFValue(108)} height={RFValue(12)} />
-          {!isLoading && (
-            <TotalCars> Total de {cars.length} carros </TotalCars>
-          )}
+          {!isLoading && <TotalCars> Total de {cars.length} carros </TotalCars>}
         </HeaderContent>
       </Header>
       {isLoading ? (
-        <LoadAnimation />
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <LoadAnimation />
+        </View>
       ) : (
         <CarList
           data={cars}
