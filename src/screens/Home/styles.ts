@@ -44,19 +44,3 @@ export const CarList = styled<any>(
     padding: 24,
   },
 })``;
-
-export const MyCarsButton = styled<any>(RectButton)`
-  width: 60px;
-  height: 60px;
-
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 30px;
-
-  background-color: ${({ theme }) => theme.colors.main};
-
-  position: absolute;
-  bottom: 13px;
-  right: 22px;
-`;
