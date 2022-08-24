@@ -94,7 +94,13 @@ export function SchedulingDetails() {
         id: car.id,
         unavailable_dates,
       })
-      .then(() => navigation.navigate("SchedulingComplete"))
+      .then(() => {
+        navigation.navigate("Confirmation", {
+          nextScreen: "Home",
+          title: "Carro alugado!",
+          message: `Agora você só precis ir\naté uma concessionária RENTX\ne pegar seu automóvel.`,
+        });
+      })
       .catch((err) => {
         setIsLoading(false);
         console.log(err);

@@ -6,6 +6,8 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
+
 import * as Yup from "yup";
 
 import theme from "@/global/styles/theme";
@@ -16,7 +18,9 @@ import { PasswordInput } from "@/components/PasswordInput";
 
 import { Footer, Container, Header, Subtitle, Title, Form } from "./styles";
 
-export function SigIn() {
+export function SignIn() {
+  const navigation = useNavigation<any>();
+
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
@@ -31,12 +35,16 @@ export function SigIn() {
 
       await schema.validate({ email, password });
     } catch (err) {
-      if(err instanceof Yup.ValidationError) {
+      if (err instanceof Yup.ValidationError) {
         console.log(err.message);
       } else {
         console.log(err);
       }
     }
+  }
+
+  function handleNewAccount() {
+    navigation.navigate("FirstStep");
   }
 
   return (
@@ -88,9 +96,7 @@ export function SigIn() {
               title="Criar conta gratuita"
               color={theme.colors.background_secondary}
               light
-              onPress={() => {}}
-              enabled={false}
-              isLoading={false}
+              onPress={handleNewAccount}
             />
           </Footer>
         </Container>
