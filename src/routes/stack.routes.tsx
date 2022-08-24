@@ -17,7 +17,7 @@ const { Navigator, Screen } = createStackNavigator();
 
 export function StackRoutes() {
   return (
-    <Navigator screenOptions={{ headerShown: false }} initialRouteName="FirstStep">
+    <Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
       <Screen name="Splash" component={Splash} />
       <Screen name="FirstStep" component={FirstStep} />
       <Screen name="SecondStep" component={SecondStep} />

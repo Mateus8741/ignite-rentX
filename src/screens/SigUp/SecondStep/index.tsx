@@ -24,12 +24,13 @@ import {
   SubTitle,
   Title,
 } from "./styles";
+import { api } from "@/services/api";
 
 interface Params {
   user: {
     name: string;
     email: string;
-    cnh: string;
+    driver_license: string;
   };
 }
 
@@ -47,18 +48,30 @@ export function SecondStep() {
     navigation.goBack();
   }
 
-  function handleRegister() {
+  async function handleRegister() {
     if (!password || !confirmPassword) {
       return Alert.alert("Erro", "Preencha todos os campos");
     } else if (password !== confirmPassword) {
       return Alert.alert("Erro", "As senhas não coincidem");
     }
 
-    navigation.navigate("Confirmation", {
-      nextScreen: "SignIn",
-      title: "Cadastro concluído",
-      message: `Agora é só fazer login\ne aproveitar`,
-    });
+    await api
+      .post("/users", {
+        name: user.name,
+        email: user.email,
+        driver_license: user.driver_license,
+        password,
+      })
+      .then(() => {
+        navigation.navigate("Confirmation", {
+          nextScreen: "SignIn",
+          title: "Cadastro concluído",
+          message: `Agora é só fazer login\ne aproveitar`,
+        });
+      })
+      .catch((error) => {
+        Alert.alert("Erro", "Erro ao cadastrar usuário");
+      });
   }
 
   return (

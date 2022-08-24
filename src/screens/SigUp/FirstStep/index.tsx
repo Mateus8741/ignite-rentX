@@ -28,7 +28,7 @@ import {
 export function FirstStep() {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
-  const [cnh, setCnh] = React.useState("");
+  const [driver_license, setDriver_license] = React.useState("");
 
   const navigation = useNavigation<any>();
 
@@ -39,7 +39,7 @@ export function FirstStep() {
   async function handleNext() {
     try {
       const schema = Yup.object().shape({
-        cnh: Yup.string().required("CNH é obrigatório"),
+        driver_license: Yup.string().required("CNH é obrigatório"),
         email: Yup.string()
           .email("E-mail inválido")
           .required("E-mail é obrigatório"),
@@ -48,7 +48,7 @@ export function FirstStep() {
       const data = {
         name,
         email,
-        cnh,
+        driver_license,
       };
       await schema.validate(data);
       navigation.navigate("SecondStep", { user: data });
@@ -106,8 +106,8 @@ export function FirstStep() {
               placeholder="CNH"
               autoCorrect={false}
               keyboardType="numeric"
-              onChangeText={setCnh}
-              value={cnh}
+              onChangeText={setDriver_license}
+              value={driver_license}
             />
           </Form>
           <Button title="Próximo" onPress={handleNext} />

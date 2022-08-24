@@ -16,10 +16,13 @@ import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { PasswordInput } from "@/components/PasswordInput";
 
+import { useAuth } from "@/hooks/auth";
+
 import { Footer, Container, Header, Subtitle, Title, Form } from "./styles";
 
 export function SignIn() {
   const navigation = useNavigation<any>();
+  const { signIn } = useAuth();
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -34,6 +37,8 @@ export function SignIn() {
       });
 
       await schema.validate({ email, password });
+
+      signIn({ email, password });
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         console.log(err.message);
@@ -89,7 +94,6 @@ export function SignIn() {
             <Button
               title="Login"
               onPress={handleSigIn}
-              enabled={false}
               isLoading={false}
             />
             <Button
