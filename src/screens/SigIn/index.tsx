@@ -6,6 +6,8 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
+import * as Yup from "yup";
+
 import theme from "@/global/styles/theme";
 
 import { Button } from "@/components/Button";
@@ -17,6 +19,26 @@ import { Footer, Container, Header, Subtitle, Title, Form } from "./styles";
 export function SigIn() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+
+  async function handleSigIn() {
+    try {
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .email("Digite um e-mail válido")
+          .required("E-mail é obrigatório"),
+        password: Yup.string().required("Senha é obrigatória"),
+      });
+
+      await schema.validate({ email, password });
+    } catch (err) {
+      if(err instanceof Yup.ValidationError) {
+        console.log(err.message);
+      } else {
+        console.log(err);
+      }
+    }
+  }
+
   return (
     <KeyboardAvoidingView behavior="position" enabled>
       <TouchableWithoutFeedback
@@ -58,7 +80,7 @@ export function SigIn() {
           <Footer>
             <Button
               title="Login"
-              onPress={() => {}}
+              onPress={handleSigIn}
               enabled={false}
               isLoading={false}
             />
