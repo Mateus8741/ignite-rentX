@@ -1,12 +1,15 @@
 import React from "react";
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 
 import { RectButton } from "react-native-gesture-handler";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { RFValue } from "react-native-responsive-fontsize";
 
+interface OptionProps {
+  active: boolean;
+}
+
 export const Container = styled.View`
-  flex: 1;
   background-color: ${({ theme }) => theme.colors.background_primary};
 `;
 
@@ -62,3 +65,39 @@ export const PhotoButton = styled(RectButton)`
   right: 5px;
   border-radius: 20px;
 `;
+
+export const Content = styled.View`
+  padding: 0 24px;
+  margin-top: 122px;
+`;
+
+export const Options = styled.View`
+  border-bottom-width: 1px;
+  border-bottom-color: ${({ theme }) => theme.colors.line};
+
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+  margin-bottom: 24px;
+`;
+
+export const Option = styled.TouchableOpacity<OptionProps>`
+  ${({ active }) =>
+    active &&
+    css`
+      border-bottom-width: 3px;
+      border-bottom-color: ${({ theme }) => theme.colors.main};
+      padding-bottom: 14px;
+    `}
+`;
+
+export const OptionTitle = styled.Text<OptionProps>`
+  font-size: ${RFValue(20)}px;
+  font-family: ${({ theme, active }) =>
+    active ? theme.fonts.secondary_600 : theme.fonts.secondary_500};
+  color: ${({ theme, active }) =>
+    active ? theme.colors.header : theme.colors.text_detail};
+`;
+
+export const Section = styled.View``;
