@@ -13,8 +13,9 @@ import { useTheme } from "styled-components";
 import { useAuth } from "@/hooks/auth";
 
 import * as ImagePicker from "expo-image-picker";
+import * as Yup from "yup";
 
-import { Keyboard, KeyboardAvoidingView } from "react-native";
+import { Alert, Keyboard, KeyboardAvoidingView } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
@@ -33,9 +34,10 @@ import {
   OptionTitle,
   Section,
 } from "./styles";
+import { Button } from "@/components/Button";
 
 export function Profile() {
-  const { user, signOut } = useAuth();
+  const { user, signOut, updateUser } = useAuth();
 
   const [option, setOption] = useState<"dataEdit" | "passwordEdit">("dataEdit");
   const [avatar, setAvatar] = useState(user.avatar);
@@ -56,6 +58,59 @@ export function Profile() {
     if (result["uri"]) {
       setAvatar(result["uri"]);
     }
+  }
+
+  async function handleUpdate() {
+    try {
+      const schema = Yup.object().shape({
+        driverLicense: Yup.string().required("CNH obrigatória"),
+        name: Yup.string().required("Nome obrigatório"),
+      });
+      const data = {
+        driverLicense,
+        name,
+      };
+      await schema.validate(data);
+      await updateUser({
+        id: user.id,
+        user_id: user.user_id,
+        email: user.email,
+        name,
+        driver_license: driverLicense,
+        avatar,
+        token: user.token,
+      });
+      Alert.alert("Dados atualizados com sucesso!");
+      Keyboard.dismiss();
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        Alert.alert("Opa!", error.message);
+        Keyboard.dismiss();
+      } else {
+        Alert.alert("Erro ao atualizar perfil", error.message);
+        Keyboard.dismiss();
+      }
+    }
+  }
+
+  async function handleSignOut() {
+    Alert.alert(
+      "Tem certeza?",
+      "Se você sair, irá precisar de internet para fazer login.",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+          onPress: async () => {},
+        },
+        {
+          text: "Sair",
+          onPress: async () => {
+            await signOut();
+          },
+        },
+      ]
+    );
   }
 
   const theme = useTheme();
@@ -81,7 +136,7 @@ export function Profile() {
             <HeaderTop>
               <BackButton color={theme.colors.shape} onPress={handleBack} />
               <HeaderTitle>Editar Perfil</HeaderTitle>
-              <LogoutButton onPress={signOut}>
+              <LogoutButton onPress={handleSignOut}>
                 <Feather name="power" size={24} color={theme.colors.shape} />
               </LogoutButton>
             </HeaderTop>
@@ -152,6 +207,7 @@ export function Profile() {
                 <PasswordInput iconName="lock" placeholder="Repetir senha" />
               </Section>
             )}
+            <Button title="Salvar alterações" onPress={handleUpdate} />
           </Content>
         </Container>
       </TouchableWithoutFeedback>

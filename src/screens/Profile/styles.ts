@@ -49,6 +49,9 @@ export const Photo = styled.Image`
   width: 180px;
   height: 180px;
   border-radius: 90px;
+
+  border-width: 3px;
+  border-color: ${({ theme }) => theme.colors.main};
 `;
 
 export const PhotoButton = styled(RectButton)`
