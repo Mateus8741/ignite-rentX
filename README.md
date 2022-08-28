@@ -1,4 +1,4 @@
-![App Screenshot](.github/cover.png)
+![App Screenshot](./assets/cover.png)
 
 # Rentx
 Complete application to rent cars.
