@@ -36,10 +36,11 @@ export const TotalCars = styled.Text`
 `;
 
 export const CarList = styled<any>(
-  FlatList as new (props: FlatListProps<Car>) => FlatList<Car>
+  FlatList as new () => FlatList<Car>
 ).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
     padding: 24,
   },
 })``;
+// props: FlatListProps<Car>

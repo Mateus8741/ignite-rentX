@@ -16,7 +16,7 @@ import { synchronize } from "@nozbe/watermelondb/sync";
 
 import { Car as ModelCar } from "../../database/model/Car";
 
-import { database } from "@/database";
+import { database } from "../../database";
 
 import { Car } from "@/components/Car";
 
@@ -40,14 +40,14 @@ export function Home() {
       database,
       pullChanges: async ({ lastPulledAt }) => {
         const response = await api.get(
-          `/cars/sync/pull?lastPulledVersion=${lastPulledAt || 0}`
+          `cars/sync/pull?lastPulledVersion=${lastPulledAt || 0}`
         );
         const { changes, latestVersion } = response.data;
         return { changes, timestamp: latestVersion };
       },
       pushChanges: async ({ changes }) => {
         const user = changes.users;
-        await api.post("/users/sync", user);
+        await api.post("users/sync", user);
       },
     });
   }

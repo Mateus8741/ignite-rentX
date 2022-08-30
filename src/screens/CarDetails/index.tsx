@@ -15,6 +15,7 @@ import { Button } from "@/components/Button";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { getAccessoryIcon } from "@/utils/getAccessoryIcon";
 import { CarDTO } from "@/dtos/CarDTO";
+import { Car } from "@/database/model/Car";
 
 import {
   About,
